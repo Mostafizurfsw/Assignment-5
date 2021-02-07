@@ -1,4 +1,41 @@
 body {
-    background: url(background.jpg);
+    background: url(background.jpg) no-repeat fixed;
     background-size: cover;
+}
+
+.foodDetails{
+    width: 250px;
+    border: solid rgba(255, 255, 255, 0.527) 2px;
+    height: 350px;
+    margin: auto;
+}
+
+.card{
+    width: 600px;
+    background: whitesmoke;
+    padding-top: 25px;
+    margin-top: 20px;
+    border: solid rgba(255, 255, 255, 0.527) 2px;
+}
+
+.card-body{
+    background: transparent;
+}
+
+h6{
+    text-align: center;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+}
+
+#foodInfo{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding-right: 20%;
+    grid-gap:30px;
+}
+
+h1{
+    color: white;
+    font-weight: bolder;
 }
