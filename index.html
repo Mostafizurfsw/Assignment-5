@@ -16,11 +16,12 @@
     <div id="foodView" class="container">
         <form class="col-md-5 m-auto pt-5">
             <div class="input-group mb-5 pb-5">
-                <input type="text" id="search-input" class="form-control" placeholder="Search for a meal">
-                <button type="button" class="btn btn-success" id="searchButton" onclick="inSearchBar()">Search</button>
+                <input id="search-input" type="text" class="form-control" placeholder="Search for a meal">
+                <button type="button" onclick="inSearchBar()" class="btn btn-success">Search</button>
                 
             </div>
         </form>
+        <h3 id="showError" class="errorShow"></h3>
         <div class="foodInfo" id="foodInfo">
 
         </div>
@@ -31,6 +32,6 @@
     </div>
 
     <!-- javascript -->
-    <script src="hungry.js"></script>
+    <script src="hungrynaki.js"></script>
 </body>
 </html>

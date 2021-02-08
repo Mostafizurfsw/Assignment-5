@@ -1,91 +1,41 @@
-const inSearchBar = () => {
+const inSearchBar = async() => {
     const searchBar = document.getElementById("search-input").value;
-
-    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchBar}`)
-    .then(resp => resp.json())
-    .then(data => { 
-        const meals = data.meals;
-        // console.log(meals);
-        meals.map(element => {
-            const mealContainer = document.createElement("div");
-            const mealImg = element.strMealThumb;
-            const mealName = element.strMeal;
-            const mealCat =  element.strCategory;
-            const mealArea =  element.strArea;
-            const mealId = element.idMeal;
-            const foodInfoType = document.getElementById("foodInfo");
-            // console.log(foodInfoType);
-           
-            const foodResult = `<div class="foodDetails" onclick="resultDetails(${mealId})">
-                <div class="card-body">
-                    <img class="card-img-top pb-3" src="${mealImg}" >
-                    <h6 class="card-text">${mealName}</h6>
-                    <h6 class="card-text">${mealCat}</h6>
-                    <h6 class="card-text">${mealArea}</h6>
-                </div>`
-                mealContainer.innerHTML=foodResult;
-                foodInfoType.appendChild(mealContainer);
-        })
-    })
-    .catch(() =>{
-        let result = document.getElementById("foodInfo").innerHTML="<h1>Not available!</h1>";
-        return result;
-    })
-
-    // List all meals by first letter
-    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${searchBar}`)
-    .then(res => res.json())
-    .then(data => { 
-        const meals = data.meals;
-        // console.log(meals);
-        meals.map(element => {
-            const mealContainer = document.createElement("div");
-            const mealImg = element.strMealThumb;
-            const mealName = element.strMeal;
-            const mealCat =  element.strCategory;
-            const mealArea =  element.strArea;
-            const mealId = element.idMeal;
-            const foodInfoType = document.getElementById("foodInfo");
-            // console.log(foodInfoType);
-           
-            const foodResult = `<div class="foodDetails" onclick="resultDetails(${mealId})">
-                <div class="card-body">
-                    <img class="card-img-top pb-3" src="${mealImg}" >
-                    <h6 class="card-text">${mealName}</h6>
-                    <h6 class="card-text">${mealCat}</h6>
-                    <h6 class="card-text">${mealArea}</h6>
-                </div>`
-                mealContainer.innerHTML=foodResult;
-                foodInfoType.appendChild(mealContainer);
-        })
-    })
-
-    // Filter by Category
-    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${searchBar}`)
-    .then(res => res.json())
-    .then(data => { 
-        const meals = data.meals;
-        // console.log(meals);
-        meals.map(element => {
-            const mealContainer = document.createElement("div");
-            const mealImg = element.strMealThumb;
-            const mealName = element.strMeal;
-            const mealId = element.idMeal;
-            const foodInfoType = document.getElementById("foodInfo");
-            // console.log(foodInfoType);
-           
-            const foodResult = `<div class="foodDetails" onclick="resultDetails(${mealId})">
-                <div class="card-body">
-                    <img class="card-img-top pb-3" src="${mealImg}" >
-                    <h6 class="card-text">${mealName}</h6>
-                    
-                </div>`
-                mealContainer.innerHTML=foodResult;
-                foodInfoType.appendChild(mealContainer);
-        })
-    })
-    
+    // console.log(searchBar);
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchBar}`
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayMeals(data.meals))
+        .catch(error => displayError('No Match :( '));
 }
+
+
+let displayMeals = meals => {
+    // console.log(meals);
+    const mealContainer = document.getElementById('foodInfo');
+    mealContainer.innerHTML = '';
+    
+    meals.forEach(meal => {
+        const mealContainer = document.createElement("div");
+            const mealImg = meal.strMealThumb;
+            const mealName = meal.strMeal;
+            const mealCat =  meal.strCategory;
+            const mealArea =  meal.strArea;
+            const mealId = meal.idMeal;
+            const foodInfoType = document.getElementById("foodInfo");
+
+            const foodResult = `<div class="foodDetails" onclick="resultDetails(${mealId})">
+                <div class="card-body">
+                    <img class="card-img-top pb-3" src="${mealImg}" >
+                    <h6 class="card-text">${mealName}</h6>
+                    <h6 class="card-text">${mealCat}</h6>
+                    <h6 class="card-text">${mealArea}</h6>
+                </div>`
+                mealContainer.innerHTML=foodResult;
+                foodInfoType.appendChild(mealContainer);
+    });
+}
+
+
 
 // details by clicked view 
 const resultDetails = (id) =>{
@@ -136,7 +86,7 @@ const resultDetails = (id) =>{
     })
 }
 
-
-
-
-
+const displayError = error => {
+    const errorTag = document.getElementById('showError');
+    errorTag.innerText = error;
+}
